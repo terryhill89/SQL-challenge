@@ -9,27 +9,16 @@ CREATE TABLE "Departments" (
 
 SELECT * FROM "Departments";
 
--- create Departments Employee table
-CREATE TABLE "Department_Employee" (
-    "emp_no" INTEGER   NOT NULL,
-    "dept_no" VARCHAR(15)   NOT NULL,
-    CONSTRAINT "pk_Department_Employee" PRIMARY KEY (
-     "emp_no","dept_no"
+-- create Titles table
+CREATE TABLE "Titles" (
+    "title_id" VARCHAR(15)   NOT NULL,
+    "title" VARCHAR(30)   NOT NULL,
+    CONSTRAINT "pk_Titles" PRIMARY KEY (
+    "title_id"
      )
 );
 
-SELECT * FROM "Department_Employee";
-
--- create Department_Manager table
-CREATE TABLE "Department_Manager" (
-    "dept_no" VARCHAR(15)   NOT NULL,
-    "emp_no" INTEGER   NOT NULL,
-    CONSTRAINT "pk_Department_Manager" PRIMARY KEY (
-     "emp_no"
-     )
-);
-
-SELECT * FROM "Department_Manager";
+SELECT * FROM "Titles";
 
 -- create Employees table
 CREATE TABLE "Employees" (
@@ -53,19 +42,38 @@ CREATE TABLE "Salaries" (
     "salary" INTEGER   NOT NULL,
     CONSTRAINT "pk_Salaries" PRIMARY KEY (
     "emp_no"
-     )
+     ), FOREIGN KEY (emp_no) REFERENCES "Employees" (emp_no)
 );
 
 SELECT * FROM "Salaries"; 
 
--- create Titles table
-CREATE TABLE "Titles" (
-    "title_id" VARCHAR(15)   NOT NULL,
-    "title" VARCHAR(30)   NOT NULL,
-    CONSTRAINT "pk_Titles" PRIMARY KEY (
-    "title_id"
-     )
+-- create Department_Manager table
+CREATE TABLE "Department_Manager" (
+    "dept_no" VARCHAR(15)   NOT NULL,
+    "emp_no" INTEGER   NOT NULL,
+    CONSTRAINT "pk_Department_Manager" PRIMARY KEY (
+     "emp_no"
+     ), FOREIGN KEY (emp_no) REFERENCES "Employees" (emp_no),
+	FOREIGN KEY (dept_no) REFERENCES "Departments" (dept_no)
 );
 
-SELECT * FROM "Titles";
+SELECT * FROM "Department_Manager";
+
+
+-- create Departments Employee table
+CREATE TABLE "Department_Employee" (
+    "emp_no" INTEGER   NOT NULL,
+    "dept_no" VARCHAR(15)   NOT NULL,
+    CONSTRAINT "pk_Department_Employee" PRIMARY KEY (
+     "emp_no","dept_no"
+     ), FOREIGN KEY (emp_no) REFERENCES "Employees" (emp_no),
+	FOREIGN KEY (dept_no) REFERENCES "Departments" (dept_no)
+);
+
+SELECT * FROM "Department_Employee";
+
+
+
+
+
 
